@@ -10,7 +10,7 @@ module.exports = app => {
         },
 
         get viagemRepository() {
-            return new app.repositorio.viagemRepository(this.viagem, this.jornada, this.dateUtil);
+            return new app.repositorio.viagemRepository(this.viagem, this.jornada, this.totalizadores, this.dateUtil);
         },
 
         get viagemController() {
