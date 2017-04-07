@@ -4,21 +4,25 @@ module.exports = app => {
         get viagem() {
             return app.modelo.viagem;
         },
+ 
+        get detalheViagem() {
+            return app.modelo.detalheViagem;
+        },
 
-         get jornada() {
+        get jornada() {
             return app.modelo.jornada;
         },
 
-        get viagemRepository() {
-            return new app.repositorio.viagemRepository(this.viagem, this.jornada, this.totalizadores, this.dateUtil);
-        },
-
-        get viagemController() {
-            return new app.controladores.viagemController(this.viagemRepository);
-        },
-        
         get totalizadores() {
             return app.modelo.totalizadores;
+        },
+        
+        get viagemRepository() {
+            return new app.repositorio.viagemRepository(this.viagem, this.detalheViagem, this.jornada, this.totalizadores, this.dateUtil);
+        },
+        
+        get viagemController() {
+            return new app.controladores.viagemController(this.viagemRepository);
         },
 
         get dateUtil() {

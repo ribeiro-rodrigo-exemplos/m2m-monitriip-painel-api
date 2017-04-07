@@ -4,4 +4,8 @@ module.exports = app => {
 
     app.route('/v1/viagens')
         .get(controlador.obter.bind(controlador));
+    
+    app.route('/v1/viagem/:id')
+        .get(controlador.obterPorId.bind(controlador));
+           
 };

@@ -1,5 +1,6 @@
 mongodb:
     url: mongodb://172.18.107.204:27017/frota_znh
+        
 
 server:
   port: 3009
