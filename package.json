@@ -16,13 +16,16 @@
     "express-validator": "^3.1.2",
     "fs": "0.0.1-security",
     "js-yaml": "^3.8.2",
+    "jsonwebtoken": "^7.3.0",
     "mkdirp": "^0.5.1",
     "mocha": "^3.2.0",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.11",
     "mongodb": "^2.2.25",
     "mongoose": "^4.9.2",
+    "mysql": "^2.13.0",
     "route-cache": "^0.4.1",
+    "sequelize": "^3.30.4",
     "supertest": "^3.0.0",
     "winston": "^2.3.1"
   }

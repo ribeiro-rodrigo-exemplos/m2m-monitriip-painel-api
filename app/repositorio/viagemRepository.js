@@ -3,10 +3,11 @@ let moment = require('moment');
 
 module.exports = () =>
     class viagemRepository {
-            constructor(viagem, detalheViagem, jornada, totalizadores, dateUtil) {
+            constructor(viagem, detalheViagem, jornada, empresa, dateUtil) {
                 this._viagem = viagem;
                 this._detalheViagem = detalheViagem;
                 this._jornada = jornada;
+                this._empresa = empresa;
                 this._dateUtil = dateUtil;
             }
 
@@ -23,6 +24,10 @@ module.exports = () =>
 
                 if(objConsulta.veiculo){
                     match["placaVeiculo"] = objConsulta.veiculo;
+                }
+
+                if(objConsulta.cnpjCliente){
+                    match["cnpjCliente"] = objConsulta.cnpjCliente;
                 }
 
                 group = {$group: {_id: "$dataInicial", 
@@ -56,6 +61,10 @@ module.exports = () =>
                     match["placaVeiculo"] = objConsulta.veiculo;
                 }
 
+                if(objConsulta.cnpjCliente){
+                    match["cnpjCliente"] = objConsulta.cnpjCliente;
+                }
+
                 group = {$group: {_id: "$idViagem", 
                             descricaoLinha: {$first: "$descricaoLinha"},
                             tipoViagem: {$first: "$tipoViagem"},
@@ -66,7 +75,7 @@ module.exports = () =>
                         }}
 
                 query.push([{$match:match},group])
-
+                
                 return query;
 
             }
@@ -85,6 +94,10 @@ module.exports = () =>
 
                 if(objConsulta.veiculo){
                     match["placaVeiculo"] = objConsulta.veiculo;
+                }
+
+                if(objConsulta.cnpjCliente){
+                    match["cnpjCliente"] = objConsulta.cnpjCliente;
                 }
 
                 group = {$group: {_id: "$dataInicial", 
@@ -109,6 +122,10 @@ module.exports = () =>
                 if(objConsulta.veiculo){
                     query["placaVeiculo"] = objConsulta.veiculo;
                 }
+
+                if(objConsulta.cnpjCliente){
+                    query["cnpjCliente"] = objConsulta.cnpjCliente;
+                }
                 
                 query["idViagem"] = objConsulta.idViagem;
                 query["$and"] = [{dataInicial: {$gte: objConsulta.dataInicial}},{dataInicial: {$lte: objConsulta.dataFinal}}];
@@ -121,11 +138,11 @@ module.exports = () =>
             
             buscarViagens(objConsulta){
                 logger.info(`viagemRepository - buscarViagens - dataInicial: ${objConsulta.dataInicial} - dataFinal: ${objConsulta.dataFinal} - 
-                            motorista: ${objConsulta.motorista} - veiculo: ${objConsulta.veiculo}`);
+                            motorista: ${objConsulta.motorista} - cnpj: ${objConsulta.cnpjCliente} - veiculo: ${objConsulta.veiculo}`);
 
                 return new Promise((resolve, reject) => {
-                    objConsulta.dataInicial = this._dateUtil.formataDataHora(objConsulta.dataInicial, "", this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
-                    objConsulta.dataFinal = this._dateUtil.formataDataHora(objConsulta.dataFinal, "", this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
+                    objConsulta.dataInicial = this._dateUtil.formataDataHora(objConsulta.dataInicial, objConsulta.gmtCliente, this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
+                    objConsulta.dataFinal = this._dateUtil.formataDataHora(objConsulta.dataFinal, objConsulta.gmtCliente, this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
 
                     let query = this.montaQueryViagens(objConsulta);
 
@@ -140,11 +157,11 @@ module.exports = () =>
 
             buscarViagemPorId(objConsulta){
                 logger.info(`viagemRepository - buscarViagemPorId - idViagem: ${objConsulta.idViagem} - dataInicial: ${objConsulta.dataInicial} - 
-                            dataFinal: ${objConsulta.dataFinal} - motorista: ${objConsulta.motorista} - veiculo: ${objConsulta.veiculo}`);
+                            dataFinal: ${objConsulta.dataFinal} - motorista: ${objConsulta.motorista} - cnpj: ${objConsulta.cnpjCliente} - veiculo: ${objConsulta.veiculo}`);
 
                 return new Promise((resolve, reject) => {
-                    objConsulta.dataInicial = this._dateUtil.formataDataHora(objConsulta.dataInicial, "", this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
-                    objConsulta.dataFinal = this._dateUtil.formataDataHora(objConsulta.dataFinal, "", this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
+                    objConsulta.dataInicial = this._dateUtil.formataDataHora(objConsulta.dataInicial, objConsulta.gmtCliente, this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
+                    objConsulta.dataFinal = this._dateUtil.formataDataHora(objConsulta.dataFinal, objConsulta.gmtCliente, this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
 
                     let query = this.montaQueryViagemPorId(objConsulta);
 
@@ -159,11 +176,11 @@ module.exports = () =>
 
             buscarJornadas(objConsulta){
                 logger.info(`viagemRepository - buscarJornadas - dataInicial: ${objConsulta.dataInicial} - dataFinal: ${objConsulta.dataFinal} - 
-                            motorista: ${objConsulta.motorista} - veiculo: ${objConsulta.veiculo}`);
+                            motorista: ${objConsulta.motorista} - cnpj: ${objConsulta.cnpjCliente} - veiculo: ${objConsulta.veiculo}`);
 
                 return new Promise((resolve, reject) => {
-                    objConsulta.dataInicial = this._dateUtil.formataDataHora(objConsulta.dataInicial, "", this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
-                    objConsulta.dataFinal = this._dateUtil.formataDataHora(objConsulta.dataFinal, "", this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
+                    objConsulta.dataInicial = this._dateUtil.formataDataHora(objConsulta.dataInicial, objConsulta.gmtCliente, this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
+                    objConsulta.dataFinal = this._dateUtil.formataDataHora(objConsulta.dataFinal, objConsulta.gmtCliente, this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
 
                     let query = this.montaQueryJornada(objConsulta);
 
@@ -178,11 +195,11 @@ module.exports = () =>
 
             buscarTotalizadores(objConsulta){
                 logger.info(`viagemRepository - buscarTotalizadores - dataInicial: ${objConsulta.dataInicial} - dataFinal: ${objConsulta.dataFinal} - 
-                            motorista: ${objConsulta.motorista} - veiculo: ${objConsulta.veiculo}`);
+                            motorista: ${objConsulta.motorista} - cnpj: ${objConsulta.cnpjCliente} - veiculo: ${objConsulta.veiculo}`);
 
                 return new Promise((resolve, reject) => {
-                    objConsulta.dataInicial = this._dateUtil.formataDataHora(objConsulta.dataInicial, "", this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
-                    objConsulta.dataFinal = this._dateUtil.formataDataHora(objConsulta.dataFinal, "", this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
+                    objConsulta.dataInicial = this._dateUtil.formataDataHora(objConsulta.dataInicial, objConsulta.gmtCliente, this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
+                    objConsulta.dataFinal = this._dateUtil.formataDataHora(objConsulta.dataFinal, objConsulta.gmtCliente, this._dateUtil.formato.DATAHORA_AMD_TRACO, this._dateUtil.tipoRetorno.STRING);
                     
                     let query = this.montaQueryTotalizadores(objConsulta);
                     
@@ -193,5 +210,18 @@ module.exports = () =>
                         .catch(erro => reject(erro));
                 });
             }
+
+
+            consultaEmpresa(cnpj){
+                logger.info(`viagemRepository - cnpj: ${cnpj}`);
+
+                return new Promise((resolve, reject) => {
+                    this._empresa.findAll({where: {cd_cnpj: cnpj}, attributes: ['id_cliente']})
+                        .then(result => {
+                            resolve(result.length ? result : null)})
+                        .catch(erro => reject(erro))
+                });
+            }
+
 
     }

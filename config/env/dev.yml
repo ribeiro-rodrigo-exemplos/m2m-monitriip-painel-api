@@ -1,3 +1,11 @@
+mysql:
+  frota:
+    host: localhost
+    username: frota
+    password: frota
+    port: 3306
+    database: frota_zn4
+
 mongodb:
     url: localhost:27017
 
