@@ -17,6 +17,7 @@ module.exports = () =>
                 let group = {};
 
                 match ["dataInicial"] = {$gte: objConsulta.dataInicial, $lte: objConsulta.dataFinal}
+                match["aberto"] = false;
 
                 if(objConsulta.motorista){
                     match["cpfMotorista"] = objConsulta.motorista;
@@ -52,6 +53,7 @@ module.exports = () =>
                 let group = {};
 
                 match ["dataInicial"] = {$gte: objConsulta.dataInicial, $lte: objConsulta.dataFinal}
+                match["aberto"] = false;
 
                 if(objConsulta.motorista){
                     match["cpfMotorista"] = objConsulta.motorista;
@@ -87,6 +89,7 @@ module.exports = () =>
                 let group = {};
 
                 match ["dataInicial"] = {$gte: objConsulta.dataInicial, $lte: objConsulta.dataFinal}
+                match["aberto"] = false;
 
                 if(objConsulta.motorista){
                     match["cpfMotorista"] = objConsulta.motorista;
@@ -146,7 +149,7 @@ module.exports = () =>
 
                     let query = this.montaQueryViagens(objConsulta);
 
-                    this._viagem.find(query).lean().exec()
+                    this._viagem.aggregate(query)
                         .then(result => {
                             resolve(result ? result : null)
                         })
