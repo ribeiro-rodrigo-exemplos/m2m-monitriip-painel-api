@@ -9,8 +9,6 @@ const envs = {
 };
 
 let envName = process.env['NODE_ENV'];
-let file = null;
-envName = "hml";
 
 try {
 

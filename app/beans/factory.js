@@ -22,7 +22,7 @@ module.exports = app => {
         },
 
         get viagemRepository() {
-            return new app.repositorio.viagemRepository(this.viagem, this.detalheViagem, this.jornada, this.empresa, this.dateUtil);
+            return new app.repositorio.viagemRepository(this.viagem,this.dateUtil);
         },
         
         get viagemService(){
@@ -31,6 +31,10 @@ module.exports = app => {
         
         get viagemController() {
             return new app.controladores.viagemController(this.viagemRepository, this.viagemService);
+        },
+
+        get jornadaController(){
+            return new app.controladores.jornadaController();
         },
 
         get ssoService() {

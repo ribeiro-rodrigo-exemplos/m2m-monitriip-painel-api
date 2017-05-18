@@ -7,7 +7,7 @@ mysql:
     database: frota_zn4
 
 mongodb:
-    url: localhost:27017
+    url: mongodb://localhost:27017/test
 
 server:
   port: 3009

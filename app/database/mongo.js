@@ -41,7 +41,7 @@ mongoose.connection.on('disconnected',() => {
 });
 
 process.on('SIGINT',() => {
-    log.info('encerrando o Monitriip');
+    log.info('encerrando o Monitriip Painel API...');
     mongoose.connection.close(() => process.exit(0));
 });
 

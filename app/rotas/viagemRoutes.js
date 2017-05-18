@@ -5,10 +5,12 @@ module.exports = app => {
 
     app.use(apiTokenInterceptor.intercept.bind(apiTokenInterceptor));
 
-    app.route('/v1/viagens')
-        .get(controlador.obter.bind(controlador));
+    app.route('/v1/viagens/totalizadores')
+        .get(controlador.obterTotalizadoresDeViagens.bind(controlador));
+
+    app.route('/v1/viagens/extratos')
+        .get(controlador.obterExtratosDeViagens.bind(controlador));
     
-    app.route('/v1/viagem/:id')
-        .get(controlador.obterPorId.bind(controlador));
-           
+    app.route('/v1/viagens/:id')
+        .get(controlador.obterViagem.bind(controlador));         
 };

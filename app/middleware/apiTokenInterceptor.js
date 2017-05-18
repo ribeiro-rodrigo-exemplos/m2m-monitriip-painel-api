@@ -43,14 +43,14 @@ module.exports = app =>
         }
 
         recursoLiberado(req) {
-
-            if (req.method == 'OPTIONS' || req.method == 'HEAD') {
+return true;
+            /*if (req.method == 'OPTIONS' || req.method == 'HEAD') {
                 return true;
             }
 
             return this._recursosLiberados.some(recurso =>
                 recurso.method.includes(req.method) && recurso.path.test(req.baseUrl)
-            );
+            ); */
         }
 
     };
