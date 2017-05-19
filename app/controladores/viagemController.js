@@ -27,7 +27,7 @@ class ViagemController{
                 .comDataInicialIgualOuInferior(req.query.dataFinal)
             .obter()
                 .totalizadores()
-                    .then(result => result ? res.json(result) : res.sendStatus(204))
+                    .then(result => result.length ? res.json(result) : res.sendStatus(204))
                     .catch(error => next(error));
     }
 
@@ -52,7 +52,7 @@ class ViagemController{
                 .comDataInicialIgualOuInferior(req.query.dataFinal)
             .obter()
                 .extratos()
-                    .then(result => result ? res.json(result) : res.sendStatus(204))
+                    .then(result => result.length ? res.json(result) : res.sendStatus(204))
                     .catch(error => next(error))
     }
 
@@ -65,7 +65,7 @@ class ViagemController{
                 .porId(req.params.id)
             .obter()
                 .viagem()
-                .then(result => result ? res.json(result) : res.sendStatus(204))
+                .then(result => result.length ? res.json(result) : res.sendStatus(204))
                 .catch(error => next(error));
     }
 
