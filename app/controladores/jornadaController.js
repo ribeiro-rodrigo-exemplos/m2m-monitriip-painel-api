@@ -2,19 +2,30 @@ let logger = require('../util/log');
 
 module.exports = () => 
     class JornadaController{
-        constructor(){}
+        constructor(jornadaRepository){
+            this._jornadaRepository = jornadaRepository;
+        }
 
         obterJornadas(req,res,next){
 
             const erros = this._validarParametrosDeConsulta(req);
 
-            if (erros) {
+            if (erros){
                 res.status(422)
                     .json(erros);
-
                 return;
-            }        
+            }    
 
+            this._jornadaRepository
+                .filtrar()
+                    .porVeiculo(req.query.placaVeiculo)
+                    .porMotorista(req.query.cpfMotorista)
+                    .porCliente(req.query.cnpjCliente)
+                    .comDataInicialIgualOuSuperior(req.query.dataInicial)
+                    .comDataInicialIgualOuInferior(req.query.dataFinal)
+                .obter()
+                    .jornadas()
+                    .then(result => result.length ? res.json(result) : res.sendStatus(204));
         }
 
         _validarParametrosDeConsulta(req) {

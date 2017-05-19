@@ -24,6 +24,10 @@ module.exports = app => {
         get viagemRepository() {
             return new app.repositorio.viagemRepository(this.viagem,this.dateUtil);
         },
+
+        get jornadaRepository(){
+            return new app.repositorio.jornadaRepository(this.jornada);
+        },
         
         get viagemService(){
             return new app.servico.viagemService(this.viagemRepository);
@@ -34,7 +38,7 @@ module.exports = app => {
         },
 
         get jornadaController(){
-            return new app.controladores.jornadaController();
+            return new app.controladores.jornadaController(this.jornadaRepository);
         },
 
         get ssoService() {
