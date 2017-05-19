@@ -1,4 +1,5 @@
 let moment = require('moment');
+const safira = require('safira');
 let momentTimezone = require('moment-timezone');
 let log = require('./log');
 
@@ -67,4 +68,4 @@ class DateUtil{
     }
 }
 
-module.exports = () => DateUtil;
+safira.define(DateUtil);

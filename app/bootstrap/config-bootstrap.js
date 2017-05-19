@@ -1,6 +1,5 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
-// let logger = require('../util/log');
 
 const envs = {
     dev: './config/env/dev.yml',

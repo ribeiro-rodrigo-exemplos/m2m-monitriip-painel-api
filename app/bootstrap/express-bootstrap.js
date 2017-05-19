@@ -3,9 +3,10 @@ let consign = require('consign');
 let bodyParser = require('body-parser');
 let expressValidador = require('express-validator');
 let validator = require('express-validator');
-let customValidations = require('../util/customValidations')();
-let ErrorInterceptor = require('../middleware/errorInterceptor')();
-let CorsInterceptor = require('../middleware/corsInterceptor')();
+let customValidations = require('../util/customValidations');
+let ErrorInterceptor = require('../middleware/errorInterceptor');
+let CorsInterceptor = require('../middleware/corsInterceptor');
+require('../middleware/apiTokenInterceptor');
 
 let app = express();
 
@@ -18,17 +19,13 @@ app.use(validator({
     customValidators:customValidations
 }));
 
-app.set('jwt_web_key','m2m');
-
 consign({cwd:'app'})
     .include('util')
     .then('database')
     .then('modelo')
     .then('repositorio')
     .then('servico')
-    .then('middleware')
     .then('controladores')
-    .then('beans')
     .then('rotas')
     .into(app); 
 

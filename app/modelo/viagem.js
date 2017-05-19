@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const safira = require('safira');
+
 const SchemaTypes = mongoose.Schema.Types;
 
 const schemaViagem = mongoose.Schema({
@@ -25,7 +27,6 @@ const schemaViagem = mongoose.Schema({
     paradas: {
         motivoParada: String,
         dataHora: String
-        //localizacao: []
     },
     bilhetes: Number,
     localizacoes: String
@@ -33,6 +34,6 @@ const schemaViagem = mongoose.Schema({
 
 schemaViagem.index({createDate: 1}, {expireAfterSeconds: 864000});
 
-mongoose.model('Viagem', schemaViagem, 'viagem');
+let viagem = mongoose.model('Viagem', schemaViagem, 'viagem');
 
-module.exports = () => mongoose.model('Viagem');
+safira.defineObject(viagem,'viagem');

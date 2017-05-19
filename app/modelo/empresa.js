@@ -1,3 +1,5 @@
+const safira = require('safira');
+
 const Sequelize = require('sequelize');
 let sequelize = require('../database/frota')();
 
@@ -16,5 +18,6 @@ let Empresa = sequelize.define("empresa", {
     timestamps: false
 });
 
-module.exports = Empresa;
+safira.defineObject(Empresa,'empresa');
+
 

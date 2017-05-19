@@ -12,6 +12,8 @@ mongodb:
 server:
   port: 3009
 
+jwtKey: m2m
+
 log:
   path: var/log
   maxSize: 100000

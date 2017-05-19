@@ -25,6 +25,7 @@
     "mongoose": "^4.9.2",
     "mysql": "^2.13.0",
     "route-cache": "^0.4.1",
+    "safira": "file:///home/rodrigo/Documentos/meu-repositorio/safira/safira-1.0.0.tgz",
     "sequelize": "^3.30.4",
     "supertest": "^3.0.0",
     "winston": "^2.3.1"

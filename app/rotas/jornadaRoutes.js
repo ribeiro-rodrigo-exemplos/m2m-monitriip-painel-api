@@ -1,5 +1,7 @@
+const safira = require('safira');
+
 module.exports = app => {
-    let controlador = app.beans.factory.jornadaController;
+    let controlador = safira.bean('jornadaController');
 
     app.route('/v1/jornadas')
        .get(controlador.obterJornadas.bind(controlador));
