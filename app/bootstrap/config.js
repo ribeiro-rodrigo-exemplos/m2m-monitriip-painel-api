@@ -1,9 +1,10 @@
+const safira = require('safira');
 const yaml = require('js-yaml');
 const fs = require('fs');
 
 const envs = {
-    dev: './config/env/dev.yml',
-    hml: './config/env/hml.yml',
+    development: './config/env/development.yml',
+    production: './config/env/production.yml',
     test: './config/env/test.yml'
 };
 
@@ -14,7 +15,7 @@ try {
     if (envs[envName])
         file = envs[envName];
     else {
-        envName = 'dev';
+        envName = 'development';
         file = envs[envName];
     }
 
@@ -26,6 +27,7 @@ try {
     console.log(e);
 }
 
-module.exports = () => config;
+safira.defineObject(config,'config');
+
 
 

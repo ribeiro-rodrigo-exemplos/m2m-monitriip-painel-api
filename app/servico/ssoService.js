@@ -1,11 +1,10 @@
 let jwt = require('jsonwebtoken');
 const logger = require('../util/log');
-const jwtKey = require('../bootstrap/config-bootstrap')()['jwtKey'];
 const safira = require('safira');
 
 class SSOService {
-    constructor(jwtKey) {
-        this._webTokenPass = jwtKey;
+    constructor(config) {
+        this._webTokenPass = config.jwtKey;
     }
 
     autenticar(credenciais) {
@@ -56,6 +55,5 @@ class SSOService {
     }
 }
 
-safira.define(SSOService,'ssoService')
-      .constructorArg({value:jwtKey,name:"jwtKey"});
+safira.define(SSOService,'ssoService'); 
 

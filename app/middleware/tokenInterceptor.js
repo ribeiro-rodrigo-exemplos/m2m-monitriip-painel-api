@@ -1,10 +1,12 @@
-const logger = require('../util/log');
 const safira = require('safira');
 
-class ApiTokenInterceptor{
-    constructor(ssoService) {
+class TokenInterceptor{
+    constructor(ssoService,app,logger) {
         this._ssoService = ssoService;
         this._recursosLiberados = [];
+        this._logger = logger;
+
+        app.use(this.intercept.bind(this));
     }
 
     liberar(...recursos) {
@@ -24,7 +26,7 @@ class ApiTokenInterceptor{
         let token = this.obterToken(req);
 
         if (!token) {
-            logger.error(`ApiTokenInterceptor - intercept - O recurso exige autenticação`);
+            this._logger.error(`ApiTokenInterceptor - intercept - O recurso exige autenticação`);
 
             res.status(401)
                 .send('O recurso exige autenticação');
@@ -43,14 +45,17 @@ class ApiTokenInterceptor{
     }
 
     recursoLiberado(req) {
-        if (req.method == 'OPTIONS' || req.method == 'HEAD') {
+        return true;
+        /*if (req.method == 'OPTIONS' || req.method == 'HEAD') {
             return true;
         }
 
         return this._recursosLiberados.some(recurso =>
             recurso.method.includes(req.method) && recurso.path.test(req.baseUrl)
-        ); 
+        ); */
     }
 }
 
-safira.define(ApiTokenInterceptor);
+safira.define(TokenInterceptor);
+safira.bean('tokenInterceptor');
+

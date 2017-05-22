@@ -1,9 +1,9 @@
- const logger = require('../util/log');
- const safira = require('safira');
+const safira = require('safira');
 
 class JornadaController{
-    constructor(jornadaRepository){
+    constructor(jornadaRepository,logger){
         this._jornadaRepository = jornadaRepository;
+        this._logger = logger;
     }
 
     obterJornadas(req,res,next){

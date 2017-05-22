@@ -1,19 +1,29 @@
-let logger = require('../util/log');
+const safira = require('safira');
 
-module.exports = class ErrorInterceptor {
-    constructor() {
+class ErrorInterceptor {
+
+    constructor(logger,app){
+        this._logger = logger;
+        
+        app.use(this.intercept);
     }
 
-    static intercept(error, req, res, next) {
+    intercept(error, req, res, next) {
         if (error.status) {
             res.status(error.status)
                 .send(error.message);
             return;
         }
 
-        logger.error(`ErrorInterceptor - intercept - errorStatus: ${error.status} - errorMessage: ${error.message}`);
+        this._logger.error(`ErrorInterceptor - intercept - errorStatus: ${error.status} - errorMessage: ${error.message}`);
 
         res.status(500)
             .send('Ocorreu um erro ao processar a requisição solicitada, tente novamente mais tarde');
     }
 }
+
+safira.define(ErrorInterceptor);
+safira.bean('errorInterceptor');
+
+
+

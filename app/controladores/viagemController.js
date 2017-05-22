@@ -1,9 +1,9 @@
-const logger = require('../util/log');
 const safira = require('safira');
     
 class ViagemController{
-    constructor(viagemRepository){        
+    constructor(viagemRepository,logger){        
         this._viagemRepository = viagemRepository;
+        this._logger = logger;
     }
 
     obterTotalizadoresDeViagens(req, res, next){
@@ -16,7 +16,7 @@ class ViagemController{
             return;
         }
 
-        logger.info(`ViagemController - obterTotalizadoresDeViagens - ${JSON.stringify(req.query)}`); 
+        this._logger.info(`ViagemController - obterTotalizadoresDeViagens - ${JSON.stringify(req.query)}`); 
 
         this._viagemRepository
             .filtrar()
@@ -32,7 +32,7 @@ class ViagemController{
     }
 
     obterExtratosDeViagens(req,res,next){
-        
+
         const erros = this._validarParametrosDeConsulta(req);
 
         if(erros){
@@ -41,7 +41,7 @@ class ViagemController{
             return;
         }
 
-        logger.info(`ViagemController - obterExtratosDeViagens - ${JSON.stringify(req.query)}`); 
+        this._logger.info(`ViagemController - obterExtratosDeViagens - ${JSON.stringify(req.query)}`); 
 
         this._viagemRepository
             .filtrar()
@@ -58,7 +58,7 @@ class ViagemController{
 
     obterViagem(req,res,next){
 
-        logger.info(`ViagemController - obterViagem - ${JSON.stringify(req.params)}`); 
+        this._logger.info(`ViagemController - obterViagem - ${JSON.stringify(req.params)}`); 
 
         this._viagemRepository
             .filtrar()

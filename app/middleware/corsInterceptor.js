@@ -1,6 +1,6 @@
+const safira = require('safira');
 
-module.exports = class CORSInterceptor{
-    constructor(){}
+class CORSInterceptor{
 
     static intercept(req,res,next){
         res.header('Access-Control-Allow-Origin','*');
@@ -9,5 +9,8 @@ module.exports = class CORSInterceptor{
         next();
     }
 };
+
+const app = safira.bean('app');
+app.use(CORSInterceptor.intercept);
 
 

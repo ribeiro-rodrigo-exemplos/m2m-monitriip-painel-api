@@ -1,5 +1,7 @@
-var mysqlConfig = require('../bootstrap/config-bootstrap')()["mysql"]["frota"];
+const safira = require('safira');
 const Sequelize = require('sequelize');
+
+const mysqlConfig = safira.bean('config').mysql.frota;
 
 let sequelize = new Sequelize(mysqlConfig.database,mysqlConfig.username,mysqlConfig.password,{
     host:mysqlConfig.host,

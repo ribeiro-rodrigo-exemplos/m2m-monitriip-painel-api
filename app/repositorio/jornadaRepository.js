@@ -1,14 +1,13 @@
-const logger = require('../util/log');
 const safira = require('safira');
-const GenericFilter = require('../filtro/genericFilter');
 
 class JornadaRepository{
-    constructor(jornada){
+    constructor(jornada,logger){
         this._jornada = jornada;
+        this._logger = logger;
     }
 
     filtrar(){
-        this._jornadaFilter = new GenericFilter(this);
+        this._jornadaFilter = safira.bean('jornadaFilter');
         return this._jornadaFilter;
     }
 
@@ -23,7 +22,7 @@ class JornadaRepository{
 
     _prepareResult(fields){
         let filtro = this._jornadaFilter.filtro;
-        logger.info(`JornadaRepository - _prepareResult - filter - ${JSON.stringify(filtro)}`);
+        this._logger.info(`JornadaRepository - _prepareResult - filter - ${JSON.stringify(filtro)}`);
         return this._jornada.find(filtro,fields).lean().exec();
     }
 }

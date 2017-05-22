@@ -1,6 +1,8 @@
 let mongoose = require('mongoose');
-let log = require('../util/log');
-var config = require('../bootstrap/config-bootstrap')();
+const safira = require('safira');
+
+let log = safira.bean('logger');
+var config = safira.bean('config');
 
 if(mongoose.connection.readyState)
     return;

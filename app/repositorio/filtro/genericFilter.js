@@ -1,4 +1,4 @@
-module.exports = class GenericFilter{
+class GenericFilter{
     constructor(repository){
         this._repository = repository;
         this._filtro = {};
@@ -51,3 +51,5 @@ module.exports = class GenericFilter{
         return this._filtro;
     }
 }
+
+exports.class = GenericFilter;
