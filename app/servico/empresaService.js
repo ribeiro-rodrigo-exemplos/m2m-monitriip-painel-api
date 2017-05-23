@@ -7,11 +7,10 @@ class EmpresaService{
     }
 
     validaIdCliente(clienteId, cnpj){
-        this._logger.info(`viagemService - validaIdCliente - clienteId: ${clienteId} - cnpj: ${cnpj}`);
+        this._logger.info(`empresaService - validaIdCliente - clienteId: ${clienteId} - cnpj: ${cnpj}`);
         
         return this._empresaRepository.consultaEmpresa(cnpj)
-            .then(result => {
-                let idCliente = result[0].dataValues.id_cliente;
+            .then(idCliente => {
                 let idClienteToken = clienteId;
                 let mensagem;
                 
