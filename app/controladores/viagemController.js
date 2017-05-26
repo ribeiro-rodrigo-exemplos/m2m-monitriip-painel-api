@@ -75,7 +75,6 @@ class ViagemController{
         req.checkQuery('dataInicial', 'deve estar no formato ISO').isDate();
         req.checkQuery('dataFinal', 'deve estar no formato ISO').notEmpty();
         req.checkQuery('dataFinal', 'deve estar no formato ISO').isDate();
-        req.checkQuery('cnpjCliente', 'deve estar preenchido').notEmpty();
         
         return req.validationErrors();
     }
