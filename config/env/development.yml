@@ -1,8 +1,8 @@
 mysql:
   frota:
-    host: localhost
-    username: root
-    password: root
+    host: mysql-hml
+    username: frota
+    password: frota
     port: 3306
     database: frota_znh
 

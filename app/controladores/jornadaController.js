@@ -20,7 +20,7 @@ class JornadaController{
             .filtrar()
                 .porVeiculo(req.query.placaVeiculo)
                 .porMotorista(req.query.cpfMotorista)
-                .porCliente(req.query.cnpjCliente)
+                .porCliente({cnpj:req.query.cnpjCliente,id:req.idCliente})
                 .comDataInicialIgualOuSuperior(req.query.dataInicial)
                 .comDataInicialIgualOuInferior(req.query.dataFinal)
             .obter()

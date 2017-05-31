@@ -4,9 +4,16 @@ class GenericFilter{
         this._filtro = {};
     }
 
-    porCliente(cnpjCliente){
-        if(cnpjCliente != undefined)
-            this._filtro.cnpjCliente = cnpjCliente;
+    porCliente(filtroCliente){
+        console.log(filtroCliente);
+        if(filtroCliente != undefined){
+            if(filtroCliente.cnpj != undefined)
+                this._filtro.cnpjCliente = filtroCliente.cnpj;
+            else
+                if(filtroCliente.id != undefined)
+                    this._filtro.idCliente = filtroCliente.id; 
+        }
+            
         
         return this; 
     }
