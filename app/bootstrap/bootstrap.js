@@ -14,6 +14,6 @@ consign({cwd:'app'})
     .then('middleware/tokenInterceptor.js')
     .then('middleware/authorizationInterceptor.js')
     .then('rotas')
-    //.then('middleware/errorInterceptor.js')
+    .then('middleware/errorInterceptor.js')
     .then('bootstrap/runner.js')
     .into({});

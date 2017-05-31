@@ -12,6 +12,11 @@ class AuthorizationInterceptor{
         let idCliente = req.idCliente;
         let cnpjCliente = req.query.cnpjCliente;
 
+        if(!idCliente || !cnpjCliente){
+            next();
+            return;
+        }
+
         this._logger.info(`AuthorizationInterceptor - validaPermissaoParaConsultarComCnpj - clienteId: ${idCliente} - cnpj: ${cnpjCliente}`);
 
         if(!cnpjCliente){
