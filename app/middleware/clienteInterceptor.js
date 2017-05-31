@@ -8,6 +8,12 @@ class ClienteInterceptor{
     }
 
     validaCliente(req,res,next){
+
+        if(!req.idCliente || !req.query.cnpjCliente){
+            next();
+            return;
+        }
+
         let idCliente = req.idCliente;
         let cnpjCliente = req.query.cnpjCliente;
 
