@@ -5,7 +5,6 @@ class GenericFilter{
     }
 
     porCliente(filtroCliente){
-        console.log(filtroCliente.cnpj);
         if(filtroCliente != undefined){
             if(filtroCliente.cnpj != undefined)
                 this._filtro.cnpjCliente = filtroCliente.cnpj;
@@ -14,7 +13,6 @@ class GenericFilter{
                     this._filtro.idCliente = filtroCliente.id; 
         }
             
-        
         return this; 
     }
 
