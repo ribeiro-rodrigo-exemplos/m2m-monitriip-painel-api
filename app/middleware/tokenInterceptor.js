@@ -51,7 +51,8 @@ class TokenInterceptor{
 
         return this._recursosLiberados.some(recurso =>
             recurso.method.includes(req.method) && recurso.path.test(req.baseUrl)
-        ); 
+        );
+
     }
 }
 
