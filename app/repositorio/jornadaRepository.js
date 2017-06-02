@@ -12,12 +12,7 @@ class JornadaRepository{
     }
 
     jornadas(){
-        const fields = {
-            coordenadasInicio:0,
-            coordenadasFim:0
-        }
-
-        return this._prepareResult(fields);
+        return this._prepareResult();
     }
 
     _prepareResult(fields){
