@@ -7,7 +7,7 @@ const aggregate = [
         tempo:{$avg:"$duracao"},
         totalBilhetes:{$sum:"$totalBilhetes"},
         totalParadas:{$sum:"$totalParadas"},
-        direcoesContinuas:{$push:"$direcaoContinua"},
+        direcoesContinuas:{$addToSet:"$direcaoContinua"},
         paradas:{$push:"$paradas"},
         motoristas:{$addToSet:"$cpfMotorista"},
         SOLICITACAO_DE_PASSAGEIRO:{$sum:"$totalParadasPorMotivo.SOLICITACAO_DE_PASSAGEIRO"},
@@ -22,8 +22,8 @@ const aggregate = [
         TROCA_PROGRAMADA_DE_VEICULO:{$sum:"$totalParadasPorMotivo.TROCA_PROGRAMADA_DE_VEICULO"},
         OUTRO:{$sum:"$totalParadasPorMotivo.OUTRO"}
     }}, 
-    {$unwind:"$paradas"},
-    {$unwind:"$paradas"},
+    {$unwind:{"path":"$paradas","preserveNullAndEmptyArrays": true}},
+    {$unwind:{"path":"$paradas","preserveNullAndEmptyArrays": true}},
     {$group:{
         _id:"$_id",
         totalKm:{$first:"$totalKm"},
