@@ -3,6 +3,7 @@ const safira = require('safira');
 let aggregate = [
     {$group:{
         _id:"$idViagem",
+        identificacaoLinha: {$first:"$identificacaoLinha"},
         dataInicial:{$first:"$dataInicial"},
         dataFinal:{$last:"$dataFinal"},
         descricaoLinha:{$first:"$descricaoDaLinha"},
