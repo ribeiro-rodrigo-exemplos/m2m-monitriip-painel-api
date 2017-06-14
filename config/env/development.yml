@@ -1,13 +1,13 @@
 mysql:
   frota:
-    host: mysql-hml
+    host: 172.18.107.248
     username: frota
     password: frota
     port: 3306
     database: frota_znh
 
 mongodb:
-    url: mongodb://localhost:27017/test
+    url: mongodb://localhost:27017/monitriip
 
 server:
   port: 3009

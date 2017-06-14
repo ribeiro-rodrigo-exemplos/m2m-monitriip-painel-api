@@ -5,8 +5,11 @@ class TokenInterceptor{
         this._ssoService = ssoService;
         this._recursosLiberados = [];
         this._logger = logger;
-
-        app.use(this.intercept.bind(this));
+        this._app = app;
+    }
+    
+    created(){
+        this._app.use(this.intercept.bind(this));
     }
 
     liberar(...recursos) {
@@ -55,6 +58,7 @@ class TokenInterceptor{
     }
 }
 
-safira.define(TokenInterceptor);
-safira.bean('tokenInterceptor');
+safira.define(TokenInterceptor)
+      .build()
+      .eager();
 

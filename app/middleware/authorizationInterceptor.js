@@ -4,8 +4,11 @@ class AuthorizationInterceptor{
     constructor(app,empresaService,logger){
         this._empresaService = empresaService;
         this._logger = logger;
+        this._app = app;
+    }
 
-        app.use(this.validaPermissaoParaConsultarComCnpj.bind(this));
+    created(){
+        this._app.use(this.validaPermissaoParaConsultarComCnpj.bind(this));
     }
 
     validaPermissaoParaConsultarComCnpj(req,res,next){
@@ -32,5 +35,6 @@ class AuthorizationInterceptor{
     }
 }
 
-safira.define(AuthorizationInterceptor);
-safira.bean('authorizationInterceptor');
+safira.define(AuthorizationInterceptor)
+      .build()
+      .eager();
