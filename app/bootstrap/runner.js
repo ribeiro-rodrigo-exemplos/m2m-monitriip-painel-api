@@ -9,7 +9,6 @@ class Runner{
 
     created(){
         this._app.listen(this._port, () =>{
-            this._logger.debug(`Servidor rodando na porta ${this._port}`);
             this._logger.info(`Servidor rodando na porta ${this._port}`);
         });
     }
