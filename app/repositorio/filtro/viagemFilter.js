@@ -12,6 +12,24 @@ class ViagemFilter extends GenericFilter{
 
         return this;
     }
+
+    comDataDeInicioDaViagemIgualOuSuperior(dataInicioViagem){
+        if(dataInicioViagem != undefined){
+            this._filtro.dataInicialViagem = this._filtro.dataInicioViagem ? this._filtro.dataInicioViagem : {};
+            this._filtro.dataInicialViagem.$gte = dataInicioViagem;
+        }
+            
+        return this;
+    }
+
+    comDataDeInicioDaViagemIgualOuInferior(dataInicioViagem){
+        if(dataInicioViagem != undefined){
+            this._filtro.dataInicialViagem = this._filtro.dataInicioViagem ? this._filtro.dataInicioViagem : {};
+            this._filtro.dataInicialViagem.$lte = dataInicioViagem;
+        }
+        
+        return this;
+    }
 }
 
 safira.define(ViagemFilter)
