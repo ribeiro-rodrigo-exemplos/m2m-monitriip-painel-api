@@ -1,6 +1,6 @@
 {
   "name": "m2m-monitriip-painel-api",
-  "version": "1.0.0-SNAPSHOT",
+  "version": "1.0.0",
   "description": "web service painel de viagens monitriip",
   "main": "index.js",
   "scripts": {
