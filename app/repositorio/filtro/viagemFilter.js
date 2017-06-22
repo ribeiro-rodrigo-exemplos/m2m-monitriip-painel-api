@@ -15,7 +15,7 @@ class ViagemFilter extends GenericFilter{
 
     comDataDeInicioDaViagemIgualOuSuperior(dataInicioViagem){
         if(dataInicioViagem != undefined){
-            this._filtro.dataInicialViagem = this._filtro.dataInicioViagem ? this._filtro.dataInicioViagem : {};
+            this._filtro.dataInicialViagem = this._filtro.dataInicialViagem ? this._filtro.dataInicialViagem : {};
             this._filtro.dataInicialViagem.$gte = dataInicioViagem;
         }
             
@@ -24,7 +24,7 @@ class ViagemFilter extends GenericFilter{
 
     comDataDeInicioDaViagemIgualOuInferior(dataInicioViagem){
         if(dataInicioViagem != undefined){
-            this._filtro.dataInicialViagem = this._filtro.dataInicioViagem ? this._filtro.dataInicioViagem : {};
+            this._filtro.dataInicialViagem = this._filtro.dataInicialViagem ? this._filtro.dataInicialViagem : {};
             this._filtro.dataInicialViagem.$lte = dataInicioViagem;
         }
         
