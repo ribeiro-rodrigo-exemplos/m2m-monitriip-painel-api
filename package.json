@@ -1,10 +1,11 @@
 {
   "name": "m2m-monitriip-painel-api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "web service painel de viagens monitriip",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/**/*.js"
+    "test": "mocha test/**/*.js",
+    "start" : "NODE_ENV=production node server"
   },
   "author": "m2m solutions",
   "license": "ISC",
