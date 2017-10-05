@@ -32,8 +32,6 @@ const schemaViagem = mongoose.Schema({
     localizacoes: String
 });
 
-schemaViagem.index({createDate: 1}, {expireAfterSeconds: 864000});
-
 let viagem = mongoose.model('Viagem', schemaViagem, 'viagem');
 
 safira.defineObject(viagem,'viagem');

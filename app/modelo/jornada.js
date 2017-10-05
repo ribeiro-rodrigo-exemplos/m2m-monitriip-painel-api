@@ -11,8 +11,6 @@ const schemaJornada = mongoose.Schema({
     dataFinal: String
 });
 
-schemaJornada.index({createDate: 1}, {expireAfterSeconds: 864000});
-
 let jornada = mongoose.model('Jornada', schemaJornada, 'jornada');
 
 safira.defineObject(jornada,'jornada');
