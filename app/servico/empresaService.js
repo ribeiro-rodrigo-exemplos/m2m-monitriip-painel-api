@@ -8,9 +8,22 @@ class EmpresaService{
 
     validarEmpresaFilhaDoCliente(clienteId, cnpjEmpresa){
         this._logger.info(`empresaService - validaIdCliente - clienteId: ${clienteId} - cnpj: ${cnpjEmpresa}`);
-        
-        return this._empresaRepository.consultaEmpresa(cnpjEmpresa)
-                                        .then(idClienteEmpresa => idClienteEmpresa === clienteId);
+
+        let promises =[
+            this._empresaRepository.consultaEmpresaPorCnpj(cnpjEmpresa),
+            this._empresaRepository.consultaEmpresaPorCliente(clienteId)
+        ];
+
+        return Promise.all(promises)
+            .then(result => {
+                if(result[0] === clienteId)
+                    return true;
+
+                if(result[1] === cnpjEmpresa)
+                    return true;
+
+                return false;
+            });
     }
 }
 
