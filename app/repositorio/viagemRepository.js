@@ -1,82 +1,52 @@
-let logger = require('../util/log');
-let moment = require('moment');
+const safira = require('safira');
 
-module.exports = () =>
-    class viagemRepository {
-            constructor(viagem, jornada, totalizadores, dateUtil) {
-                this._viagem = viagem;
-                this._jornada = jornada;
-                this._dateUtil = dateUtil;
-            }
-
-            buscarViagens(dataInicial, dataFinal, motorista, veiculo){
-                logger.info(`viagemRepository - buscarViagens - dataInicial: ${dataInicial} - dataFinal: ${dataFinal} - motorista: ${motorista} - veiculo: ${veiculo}`);
-
-                return new Promise((resolve, reject) => {
-                    dataInicial = this._dateUtil.formataDataHora(dataInicial, "", "", this._dateUtil.tipoRetorno.DATA);
-                    dataFinal = this._dateUtil.formataDataHora(dataFinal, "", "", this._dateUtil.tipoRetorno.DATA);
-
-                    let query = {
-                        motorista: motorista,
-                        veiculo: veiculo,
-                        $and: [{dataInicio: {$gte: new Date(dataInicial)}},{dataInicio: {$lte: new Date(dataFinal)}}]
-                    }
-
-                    this._viagem.find(query).lean().exec()
-                        .then(result => {
-                            resolve(result ? result : null)
-                            })
-                        .catch(erro => reject(erro));
-                });
-            }
-
-
-            buscarJornadas(dataInicial, dataFinal, motorista, veiculo){
-                logger.info(`viagemRepository - buscarJornadas - dataInicial: ${dataInicial} - dataFinal: ${dataFinal} - motorista: ${motorista} - veiculo: ${veiculo}`);
-
-                return new Promise((resolve, reject) => {
-                    dataInicial = this._dateUtil.formataDataHora(dataInicial, "", "", this._dateUtil.tipoRetorno.DATA);
-                    dataFinal = this._dateUtil.formataDataHora(dataFinal, "", "", this._dateUtil.tipoRetorno.DATA);
-
-                    let query = {
-                        motorista: motorista,
-                        veiculo: veiculo,
-                        $and: [{dataInicio: {$gte: new Date(dataInicial)}},{dataInicio: {$lte: new Date(dataFinal)}}]
-                    }
-
-                    this._jornada.find(query).lean().exec()
-                        .then(result => {
-                            resolve(result ? result : null)
-                            })
-                        .catch(erro => reject(erro));
-                });
-            }
-
-
-            buscarTotalizadores(dataInicial, dataFinal, motorista, veiculo){
-                logger.info(`viagemRepository - buscarTotalizadores - dataInicial: ${dataInicial} - dataFinal: ${dataFinal} - motorista: ${motorista} - veiculo: ${veiculo}`);
-
-                return new Promise((resolve, reject) => {
-                    dataInicial = this._dateUtil.formataDataHora(dataInicial, "", "", this._dateUtil.tipoRetorno.DATA);
-                    dataFinal = this._dateUtil.formataDataHora(dataFinal, "", "", this._dateUtil.tipoRetorno.DATA);
-
-                    let query = [								
-                                    {$match: { dataInicio: {$gte:  new Date(dataInicial), $lte: new Date(dataFinal)}, 
-                                                motorista: motorista, 
-                                                veiculo: veiculo}},
-                                    {$group: {_id: {}, totalParada: {$sum: "$paradas"}, 
-                                                        totalBilhetes: {$sum: "$bilhetes"}, 
-                                                        totalTempo: {$sum: "$tempoMin"},
-                                                        totalQuilometragem: {$sum: "$quilometro"}
-                                                        }}
-                                ];
-                    
-                    this._viagem.aggregate(query)
-                        .then(result => {
-                            resolve(result ? result : null);
-                        })
-                        .catch(erro => reject(erro));
-                });
-            }
-
+class ViagemRepository {
+    constructor(viagem,dateUtil,logger,totalizadoresAggregate,extratoAggregate) {
+        this._viagem = viagem;
+        this._dateUtil = dateUtil;
+        this._logger = logger;
+        this._totalizadoresAggregate = totalizadoresAggregate;
+        this._extratoAggregate = extratoAggregate; 
     }
+
+    filtrar(){
+        this._viagemFilter = safira.bean('viagemFilter');
+        return this._viagemFilter;
+    }
+
+    extratos(){
+        this._logger.info(`ViagemRepository - extratos`);
+        return this._prepareAggregate(this._extratoAggregate);
+    }
+
+    totalizadores(){
+        this._logger.info('ViagemRepository - totalizadores')
+        return this._prepareAggregate(this._totalizadoresAggregate);
+    }
+
+    viagem(){
+        this._logger.info('ViagemRepository - viagem');
+        return this._prepareResult();
+    }
+
+    _prepareResult(fields){
+        let filtro = this._viagemFilter ? this._viagemFilter.filtro : {};
+        this._logger.info(`ViagemRepository - _prepareResult - query - ${JSON.stringify(filtro)}`);
+
+        return this._viagem.find(filtro,fields).lean().exec();
+    }
+
+    _prepareAggregate(query){
+
+        if(this._viagemFilter)
+            query = [{$match:this._viagemFilter.filtro}].concat(query);
+        
+        this._logger.info(`ViagemRepository - _prepareAggregate - query - ${JSON.stringify(query)}`);
+        
+        return this._viagem
+                    .aggregate(query)
+                    .then(result => result ? result : null);
+    }    
+}
+
+safira.define(ViagemRepository);

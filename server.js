@@ -1,13 +1,11 @@
-var app = require('./app/bootstrap/express-bootstrap');
-const config = require('./app/bootstrap/config-bootstrap')();
 
-app.all('/*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-  res.header("Access-Control-Allow-Methods", "GET, POST","PUT");
-  next();
-});
+const os = require('os');
+const cluster = require('cluster');
 
-app.listen(config.server.port, () =>{
-    console.log("Servidor online na porta " + config.server.port);
-});
+function criarClusters(){
+    os.cpus()
+        .forEach(() => cluster.isMaster ? cluster.fork() : require('./app/bootstrap/bootstrap'));
+}
+
+process.env["NODE_ENV"] == 'production' ? criarClusters() : require('./app/bootstrap/bootstrap');
+
