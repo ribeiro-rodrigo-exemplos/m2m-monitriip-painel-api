@@ -11,8 +11,8 @@ class TotalizadoresRepository{
         return this._totalizadoresFilter;
     }
 
-    totalizadores(fields){
-        return this._prepareResult(fields);
+    totalizadores(){
+        return this._prepareResult(this._totalizadoresFilter.fields);
     }
 
     _prepareResult(fields){
