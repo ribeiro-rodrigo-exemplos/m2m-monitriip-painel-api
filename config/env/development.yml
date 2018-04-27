@@ -13,7 +13,7 @@ mysql:
     database: sso
 
 mongodb:
-    url: mongodb://localhost:27017/monitriip
+    url: mongodb://mongo-znd:27017/monitriip_znd
 
 server:
   port: 3009
