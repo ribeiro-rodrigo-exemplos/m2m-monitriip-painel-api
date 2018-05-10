@@ -63,6 +63,10 @@ class DateUtil{
         return this._tipoRetorno;
     }
 
+    obterMesDaData(data){
+        return data.substr(0,7);
+    }
+
     getMesVigente(data){
         return moment.months()[moment(data).format('M') -1];
     }

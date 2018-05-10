@@ -48,6 +48,7 @@ class TokenInterceptor{
     }
 
     recursoLiberado(req) {
+    
         if (req.method == 'OPTIONS' || req.method == 'HEAD') {
             return true;
         }
