@@ -33,6 +33,14 @@ class TotalizadoresFilter extends GenericFilter{
         return this; 
     }
 
+    porCliente(clienteId){
+        if (clienteId != undefined){
+            this._filtro.clienteId = clienteId
+        }
+
+        return this; 
+    }
+
     get fields(){
         return this._fields; 
     }
